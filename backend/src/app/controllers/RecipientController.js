@@ -3,6 +3,12 @@ import Recipient from '../models/Recipient';
 import User from '../models/User';
 
 class RecipientController {
+  async index(req, res) {
+    const recipients = await Recipient.findAll();
+
+    return res.json(recipients);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       id_user: Yup.number().required(),
