@@ -7,15 +7,9 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      id_user: {
-        type: Sequelize.INTEGER,
+      name: {
+        type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: 'users',
-          key: 'id',
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
       },
       street: {
         type: Sequelize.STRING,

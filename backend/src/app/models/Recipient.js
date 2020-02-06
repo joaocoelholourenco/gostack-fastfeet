@@ -4,7 +4,7 @@ class Recipient extends Model {
   static init(sequelize) {
     super.init(
       {
-        id_user: Sequelize.INTEGER,
+        name: Sequelize.INTEGER,
         street: Sequelize.STRING,
         number: Sequelize.INTEGER,
         complement: Sequelize.STRING,

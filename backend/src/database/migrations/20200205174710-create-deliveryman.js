@@ -7,15 +7,13 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      id_user: {
-        type: Sequelize.INTEGER,
+      name: {
+        type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: 'users',
-          key: 'id',
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
+      },
+      email: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       avatar_id: {
         type: Sequelize.INTEGER,
