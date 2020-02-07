@@ -23,7 +23,8 @@ class DeliverymanController {
   }
 
   async index(req, res) {
-    return res.json();
+    const deliverymans = await Deliveryman.findAll();
+    return res.json(deliverymans);
   }
 
   async destroy(req, res) {
