@@ -20,7 +20,6 @@ module.exports = {
       signature_id: {
         type: Sequelize.INTEGER,
         references: { model: 'files', key: 'id' },
-        allowNull: false,
       },
       product: {
         type: Sequelize.STRING,
@@ -28,11 +27,9 @@ module.exports = {
       },
       canceled_at: {
         type: Sequelize.DATE,
-        allowNull: true,
       },
       start_date: {
         type: Sequelize.DATE,
-        allowNull: false,
       },
       end_date: {
         type: Sequelize.DATE,
