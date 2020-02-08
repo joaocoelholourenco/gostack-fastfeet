@@ -1,5 +1,7 @@
 import * as Yup from 'yup';
 
+import Mail from '../../lib/Mail';
+
 import Order from '../models/Order';
 import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
@@ -33,6 +35,12 @@ class OrderController {
     }
 
     const order = await Order.create(req.body);
+
+    await Mail.sendMail({
+      to: `${deliveryman.name}, <${deliveryman.email}>`,
+      subject: 'Nova Encomenda disponivel',
+      text: 'Nova ecomenda...',
+    });
 
     return res.json(order);
   }
