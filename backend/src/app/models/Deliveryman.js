@@ -12,5 +12,9 @@ class Deliveryman extends Model {
     );
     return this;
   }
+
+  associate(models) {
+    this.belongsTo(models.File, { foreignKey: 'avatar_id' });
+  }
 }
 export default Deliveryman;

@@ -44,6 +44,9 @@ class DeliverymanController {
   }
 
   async destroy(req, res) {
+    await Deliveryman.destroy({
+      where: { id: req.params.id },
+    });
     return res.json();
   }
 }
