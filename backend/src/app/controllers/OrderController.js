@@ -74,5 +74,10 @@ class OrderController {
     await order.update(req.body);
     return res.json(order);
   }
+
+  async destroy(req, res) {
+    const order = await Order.destroy({ where: { id: req.params.id } });
+    return res.json(order);
+  }
 }
 export default new OrderController();
