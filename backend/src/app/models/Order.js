@@ -16,10 +16,11 @@ class Order extends Model {
         sequelize,
       }
     );
+
     return this;
   }
 
-  associate(models) {
+  static associate(models) {
     this.belongsTo(models.File, { foreignKey: 'signature_id' });
     this.belongsTo(models.Recipient, { foreignKey: 'recipient_id' });
     this.belongsTo(models.Deliveryman, { foreignKey: 'deliveryman_id' });

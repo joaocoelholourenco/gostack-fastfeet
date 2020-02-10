@@ -6,15 +6,14 @@ class Deliveryman extends Model {
       {
         name: Sequelize.STRING,
         email: Sequelize.STRING,
-        avatar_id: Sequelize.INTEGER,
       },
       { sequelize }
     );
     return this;
   }
 
-  associate(models) {
-    this.belongsTo(models.File, { foreignKey: 'avatar_id' });
+  static associate(models) {
+    this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
   }
 }
 export default Deliveryman;
