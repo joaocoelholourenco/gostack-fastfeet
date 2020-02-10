@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 import Mail from '../../lib/Mail';
 
 import Order from '../models/Order';
+import File from '../models/File';
 import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
 
@@ -46,7 +47,39 @@ class OrderController {
   }
 
   async index(req, res) {
-    const orders = await Order.findAll();
+    const orders = await Order.findAll({
+      attributes: ['product', 'start_date', 'end_date', 'canceled_at'],
+      include: [
+        {
+          model: Recipient,
+          attributes: [
+            'name',
+            'street',
+            'number',
+            'complement',
+            'state',
+            'city',
+            'zip_code',
+          ],
+        },
+        {
+          model: Deliveryman,
+          attributes: ['email', 'name'],
+          include: [
+            {
+              model: File,
+              as: 'avatar',
+              attributes: ['id', 'path', 'url'],
+            },
+          ],
+        },
+        {
+          model: File,
+          as: 'signature',
+          attributes: ['id', 'path', 'url'],
+        },
+      ],
+    });
     return res.json(orders);
   }
 
