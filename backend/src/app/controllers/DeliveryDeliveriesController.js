@@ -1,9 +1,9 @@
-import Order from '../models/Order';
+import Delivery from '../models/Delivery';
 import Recipient from '../models/Recipient';
 
-class OrderDeliveriesController {
+class DeliveryDeliveriesController {
   async index(req, res) {
-    const deliveriesDelivery = await Order.findAll({
+    const deliveriesDelivery = await Delivery.findAll({
       where: [{ deliveryman_id: req.params.id }, { canceled_at: null }],
       attributes: ['product', 'end_date', 'start_date'],
       include: [
@@ -29,4 +29,4 @@ class OrderDeliveriesController {
     return res.json(deliveries);
   }
 }
-export default new OrderDeliveriesController();
+export default new DeliveryDeliveriesController();

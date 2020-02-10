@@ -1,12 +1,12 @@
 import { startOfDay, endOfDay } from 'date-fns';
 import { Op } from 'sequelize';
 
-import Order from '../models/Order';
+import Delivery from '../models/Delivery';
 import Recipient from '../models/Recipient';
 
 class DeliveriesController {
   async index(req, res) {
-    const deliveries = await Order.findAll({
+    const deliveries = await Delivery.findAll({
       where: [
         { deliveryman_id: req.params.id },
         { start_date: null },
@@ -36,7 +36,7 @@ class DeliveriesController {
     if (req.body.start_date) {
       const today = new Date();
 
-      const deliveriesToday = await Order.findAll({
+      const deliveriesToday = await Delivery.findAll({
         where: {
           deliveryman_id: req.params.id,
           start_date: {
@@ -47,12 +47,12 @@ class DeliveriesController {
 
       if (deliveriesToday.length >= 5) {
         return res.status(400).json({
-          error: 'you have reached the limit of the number of daily orders.',
+          error: 'you have reached the limit of the number of daily Deliverys.',
         });
       }
     }
 
-    const delivery = await Order.findByPk(req.params.order_id);
+    const delivery = await Delivery.findByPk(req.params.delivery_id);
 
     delivery.update(req.body);
 

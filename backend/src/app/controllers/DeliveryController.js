@@ -2,12 +2,12 @@ import * as Yup from 'yup';
 
 import Mail from '../../lib/Mail';
 
-import Order from '../models/Order';
+import Delivery from '../models/Delivery';
 import File from '../models/File';
 import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
 
-class OrderController {
+class DeliveryController {
   async store(req, res) {
     const schema = Yup.object().shape({
       recipient_id: Yup.number().required(),
@@ -35,7 +35,7 @@ class OrderController {
       res.status(400).json({ error: 'Recipient not exist' });
     }
 
-    const order = await Order.create(req.body);
+    const delivery = await Delivery.create(req.body);
 
     await Mail.sendMail({
       to: `${deliveryman.name}, <${deliveryman.email}>`,
@@ -43,11 +43,11 @@ class OrderController {
       text: 'Nova ecomenda...',
     });
 
-    return res.json(order);
+    return res.json(delivery);
   }
 
   async index(req, res) {
-    const orders = await Order.findAll({
+    const deliverys = await Delivery.findAll({
       attributes: ['product', 'start_date', 'end_date', 'canceled_at'],
       include: [
         {
@@ -80,7 +80,7 @@ class OrderController {
         },
       ],
     });
-    return res.json(orders);
+    return res.json(deliverys);
   }
 
   async update(req, res) {
@@ -109,16 +109,21 @@ class OrderController {
       res.status(400).json({ error: 'Recipient not exist' });
     }
 
-    const order = await Order.findOne({
+    const delivery = await Delivery.findOne({
       where: { id: req.params.id },
     });
-    await order.update(req.body);
-    return res.json(order);
+    await delivery.update(req.body);
+    return res.json(delivery);
   }
 
   async destroy(req, res) {
-    const order = await Order.destroy({ where: { id: req.params.id } });
+    const order = await Delivery.findByPk(req.params.id);
+
+    order.canceled_at = new Date();
+
+    await order.save();
+
     return res.json(order);
   }
 }
-export default new OrderController();
+export default new DeliveryController();
