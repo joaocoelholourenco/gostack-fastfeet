@@ -11,6 +11,7 @@ import RecipientController from './app/controllers/RecipientController';
 import FileController from './app/controllers/FileController';
 import DeliverymanController from './app/controllers/DeliverymanController';
 import DeliveriesController from './app/controllers/DeliveriesController';
+import ChekInDeliveryController from './app/controllers/ChekInDeliveryController';
 import DeliveryController from './app/controllers/DeliveryController';
 import DeliveryProblemController from './app/controllers/DeliveryProblemController';
 import DeliveryDeliveriesController from './app/controllers/DeliveryDeliveriesController';
@@ -20,20 +21,27 @@ const upload = multer(multerConfig);
 
 routes.get('/', (req, res) => res.json({ message: 'Distribuidora FastFeet' }));
 
+routes.post('/sessions', SessionController.store);
+
 routes.post('/users', UserController.store);
 routes.put('/users', UserController.update);
 
-routes.post('/sessions', SessionController.store);
-
+// Exibir um destinatario
 routes.get('/deliveries/:id', DeliveriesController.index);
-routes.put('/deliveries/:id/:delivery_id', DeliveriesController.update);
 
+// Retirada de encomenda
+routes.put('/deliveries/:id/:delivery_id', ChekInDeliveryController.update);
+
+// Exibir varios entregas pendentes
 routes.get('/delivery/:id/deliveries', DeliveryDeliveriesController.index);
 
+// Cadastra problema
 routes.post('/deliveries/problems', DeliveryProblemController.store);
 
+// Upload de foto
 routes.post('/files', upload.single('file'), FileController.store);
 
+// Verifica token
 routes.use(authMiddleware);
 
 routes.get('/delivery/problems', DeliveryProblemController.index);
