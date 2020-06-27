@@ -40,7 +40,15 @@ class DeliveryController {
     await Mail.sendMail({
       to: `${deliveryman.name}, <${deliveryman.email}>`,
       subject: 'Nova Encomenda disponivel',
-      text: 'Nova ecomenda...',
+      template: 'newDelivery',
+      context: {
+        provider: deliveryman.name,
+        user: recipient.name,
+        street: recipient.street,
+        number: recipient.number,
+        complement: recipient.complement,
+        zipcode: recipient.zip_code,
+      },
     });
 
     return res.json(delivery);
